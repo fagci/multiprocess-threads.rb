@@ -44,9 +44,14 @@ module MPThreads
       proc_count, thr_count = Parallel.calc_resources count
       proc_count.times do |i|
         ::Process.fork do
-          spawn_threads(thr_count, i, &block).each(&:join)
+          workers = spawn_threads(thr_count, i, &block)
+          workers.each(&:join)
+        rescue Interrupt
+          workers.each(&:exit)
         end
       end
+    rescue Interrupt
+      warn 'Exiting'
     end
 
     def spawn_threads(count, proc_i, &block)
@@ -66,5 +71,15 @@ module MPThreads
         [proc_count, thr_count]
       end
     end
+  end
+end
+
+if $PROGRAM_NAME == __FILE__
+  mp = MPThreads::Parallel.new do |res|
+    puts res
+  end
+
+  mp.work do
+    rand(5)
   end
 end
