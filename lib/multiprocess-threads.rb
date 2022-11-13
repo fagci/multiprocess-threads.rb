@@ -52,7 +52,8 @@ module MPThreads
     def spawn_threads(count, proc_i, &block)
       count.times.map do |i|
         Thread.new do
-          @channel.instance_exec(proc_i, i, &block)
+          res = @channel.instance_exec(proc_i, i, &block)
+          @channel.write res if res
         end
       end
     end

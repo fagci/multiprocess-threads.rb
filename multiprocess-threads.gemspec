@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'multiprocess-threads'
-  s.version     = '0.0.1'
+  s.version     = '0.0.2'
   s.summary     = 'Multiprocess threads'
   s.description = 'More effective threading using multiple processes and channel'
   s.authors     = ['Mikhail Yudin']
