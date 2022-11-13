@@ -53,7 +53,7 @@ module MPThreads
       count.times.map do |i|
         Thread.new do
           res = @channel.instance_exec(proc_i, i, &block)
-          @channel.write res if res
+          @channel.write(res) if res
         end
       end
     end
