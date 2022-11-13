@@ -17,6 +17,8 @@ module MPThreads
       return nil unless data
 
       Marshal.load data # rubocop:disable Security/MarshalLoad
+    rescue Interrupt
+      nil
     end
 
     def write(data)
